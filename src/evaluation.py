@@ -78,7 +78,6 @@ def color_spines(ax, color, lw=3):
         ax.spines[loc].set_color(color)
         ax.spines[loc].set_visible(True)
 
-
 def plot_image(ax, img, xlabel=None, ylabel=None, border_color=None):
     ax.imshow(img, interpolation='nearest')
     ax.set_xticks([])
@@ -89,8 +88,7 @@ def plot_image(ax, img, xlabel=None, ylabel=None, border_color=None):
     if border_color:
         color_spines(ax, color=border_color)
 
-
-def plot_samples(images, gamma, reconstructions, num_images=15):
+def plot_samples(model_id, images, gamma, reconstructions, num_images=15):
     gamma_combine, gamma_colors = compute_gamma_combine(gamma, gamma.shape[1])
     nrows, ncols = reconstructions.shape[1] + 2, num_images
     fig, axes = plt.subplots(nrows, ncols, figsize=(ncols, nrows))
@@ -102,3 +100,6 @@ def plot_samples(images, gamma, reconstructions, num_images=15):
                        ylabel='obj {}'.format(idx_sub + 1) if idx == 0 else None,
                        border_color=tuple(gamma_colors[idx_sub]))
     plt.subplots_adjust(hspace=0.1, wspace=0.1)
+    plt.savefig('res_img_{}'.format(model_id + 1)+'.png')
+    # 显示结果
+    # plt.show()
