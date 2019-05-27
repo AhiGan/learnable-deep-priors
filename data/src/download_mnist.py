@@ -11,7 +11,7 @@ import sys
 from six.moves.urllib.request import urlretrieve
 
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser()  # 创建解析对象
 parser.add_argument('--folder_downloads')
 args = parser.parse_args()
 bs_data_dir = args.folder_downloads
@@ -20,9 +20,13 @@ mnist_file = os.path.join(bs_data_dir, 'mnist.pkl.gz')
 hdf_file = os.path.join(bs_data_dir, 'MNIST.hdf5')
 
 if not os.path.exists(mnist_file):
+    # 将远程数据下载到本地
     urlretrieve(url, mnist_file)
 
+# 读文件
 with gzip.open(mnist_file, 'rb') as f:
+    # sys.version_info获取python版本号
+    # python2和python3的pickle不能兼容，所以是python3的化要加一个encoding='latin1，否则会报错
     if sys.version_info < (3,):
         ds = pickle.load(f)
     else:
